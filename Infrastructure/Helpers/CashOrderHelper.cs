@@ -8,6 +8,9 @@ namespace Infrastructure.Helpers
 {
     public static class CashOrderHelper
     {
+        /// <summary>
+        /// CashOrder validation 
+        /// </summary>
         public static void Validate(CashOrder cashOrder, ILogger logger, ModelStateDictionary modelState)
         {
             string message = "";
@@ -31,16 +34,38 @@ namespace Infrastructure.Helpers
             cashOrder.Status = OrderStatus.InProgress.ToString();
         }
 
-        public static IEnumerable<CashOrderResponse> ConvertToResponse(List<CashOrder> cashOrders)
+        /// <summary>
+        /// Convert CashOrders to CashOrderResponseGet
+        /// </summary>
+        /// <returns></returns>
+        public static IEnumerable<CashOrderResponseGet> ConvertToResponseGet(List<CashOrder> cashOrders)
         {
-            List<CashOrderResponse> result = new List<CashOrderResponse>();
+            List<CashOrderResponseGet> result = new List<CashOrderResponseGet>();
 
             foreach (var order in cashOrders)
             {
-                CashOrderResponse response = new CashOrderResponse();
+                CashOrderResponseGet response = new CashOrderResponseGet();
                 response.Amount = order.Amount;
                 response.Currency = order.Currency;
                 response.Status = order.Status;
+                result.Add(response);
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Convert CashOrders to CashOrderResponseCreate
+        /// </summary>
+        /// <returns></returns>
+        public static IEnumerable<CashOrderResponseCreate> ConvertToResponseCreate(List<CashOrder> cashOrders)
+        {
+            List<CashOrderResponseCreate> result = new List<CashOrderResponseCreate>();
+
+            foreach (var order in cashOrders)
+            {
+                CashOrderResponseCreate response = new CashOrderResponseCreate();
+                response.Id = order.Id;
                 result.Add(response);
             }
 

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Infrastructure.Helpers;
 using Infrastructure.Models;
@@ -28,7 +27,7 @@ namespace CashServiceAPI.Controllers
         /// API call Get by JSON: "request_id" or "client_id" && "departemnt_address"
         /// </summary>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CashOrderResponse>>> Get(CashOrder cashOrder)
+        public async Task<ActionResult<IEnumerable<CashOrderResponseGet>>> Get(CashOrder cashOrder)
         {
             try
             {
@@ -38,7 +37,7 @@ namespace CashServiceAPI.Controllers
                 {
                     cashOrders = SendMessage(cashOrder);
 
-                    return Ok(CashOrderHelper.ConvertToResponse(cashOrders)); 
+                    return Ok(CashOrderHelper.ConvertToResponseGet(cashOrders)); 
                 }             
             }
             catch (Exception ex)
@@ -54,7 +53,7 @@ namespace CashServiceAPI.Controllers
         /// API call POST create by JSON: "client_id", "departemnt_address", "amount", "currency"
         /// </summary>
         [HttpPost]
-        public async Task<ActionResult<CashOrder>> Create(CashOrder cashOrder)
+        public async Task<ActionResult<CashOrderResponseCreate>> Create(CashOrder cashOrder)
         {
             try
             {
@@ -67,10 +66,10 @@ namespace CashServiceAPI.Controllers
 
                 if (RequestMode.IsCreate(cashOrder))
                 {
-                    //variable "cashOrders" -> for future implementation(displaying on frontend)
                     List<CashOrder> cashOrders = SendMessage(cashOrder);
+
                     if (cashOrders.Count > 0)
-                        return StatusCode(201);
+                        return Ok(CashOrderHelper.ConvertToResponseCreate(cashOrders));
                     else
                         return BadRequest();
                 }

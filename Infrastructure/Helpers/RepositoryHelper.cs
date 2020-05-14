@@ -6,7 +6,7 @@ using Infrastructure.Models.Interfaces;
 
 namespace Infrastructure.Helpers
 {
-    class RepositoryHelper
+    public class RepositoryHelper
     {
         public static async Task<List<CashOrder>> GetOrCreateOrders(List<CashOrder> ordersList, ICashOrderRepository db)
         {

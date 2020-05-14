@@ -2,7 +2,7 @@
 
 namespace Infrastructure.Models
 {
-    public class CashOrderResponse
+    public class CashOrderResponseGet
     {
         [JsonPropertyName("amount")]
         public double Amount { get; set; }
@@ -13,17 +13,15 @@ namespace Infrastructure.Models
         [JsonPropertyName("status")]
         public string Status { get; set; }
 
-        public CashOrderResponse()
+        public CashOrderResponseGet()
         {
         }
 
-        public CashOrderResponse(CashOrder order)
+        public CashOrderResponseGet(CashOrder order)
         {
             this.Amount = order.Amount;
             this.Currency = order.Currency;
             this.Status = order.Status;
         }
-
-        
     }
 }
