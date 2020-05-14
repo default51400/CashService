@@ -1,0 +1,35 @@
+CREATE TABLE [dbo].[CashOrders] (
+    [Id]   INT	IDENTITY (1, 1) NOT NULL,
+    [UserId] INT, || [UserId] NVARCHAR (50),
+    [OfficeAddress] NVARCHAR (100),
+    [Amount] DECIMAL (19,4),
+    [Currency] NVARCHAR (50),
+    [IpAddress] NVARCHAR (100),
+    [Status]  NVARCHAR (20)
+);
+
+
+CREATE TABLE [dbo].[Users] (
+    [Id]   INT	IDENTITY (1, 1) NOT NULL,
+    [Name] NVARCHAR (MAX),
+    [Age]  INT,
+    [IpAddress] NVARCHAR (60),
+    CONSTRAINT [PK_Users] PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+CREATE TABLE [dbo].[Offices] (
+    [Id]   INT	IDENTITY (1, 1) NOT NULL,
+    [Name] NVARCHAR (MAX),
+    [Address] NVARCHAR (MAX),
+    [Phone] NVARCHAR (32),
+    CONSTRAINT [PK_Offices] PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+CREATE TABLE [dbo].[CashOrders] (
+    [Id]   INT	IDENTITY (1, 1) NOT NULL,
+    [UserId] INT REFERENCES Users (Id),
+    [Amount] DECIMAL (19,4),
+    [Currency] NVARCHAR (MAX),
+    [OfficeId] INT REFERENCES Offices (Id),
+    CONSTRAINT [PK_CashOrders] PRIMARY KEY CLUSTERED ([Id] ASC)
+);
